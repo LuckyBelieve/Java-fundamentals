@@ -10,7 +10,7 @@ public class CheckNationality {
         else{
             System.out.println("You are a rwandan");
         }
-    };
+    }
 
     public static void main(String[] ags){
         try {
@@ -20,5 +20,5 @@ public class CheckNationality {
         }finally {
             System.out.println("Thanks for applying");
         }
-    };
+    }
 }
