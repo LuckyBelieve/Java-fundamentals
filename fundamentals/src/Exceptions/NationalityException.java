@@ -9,4 +9,5 @@ public class NationalityException extends Exception{
     public String toString(){
         return "Customized Exception " + message;
     }
+
 }

@@ -1,6 +1,7 @@
 package Exceptions;
 
 import java.util.Objects;
+import java.util.Scanner;
 
 public class CheckNationality {
     public static void check(String country) throws NationalityException {
@@ -13,12 +14,15 @@ public class CheckNationality {
     }
 
     public static void main(String[] ags){
+        Scanner scanner = new Scanner(System.in);
+        String nationality  = scanner.nextLine();
         try {
-            check("Rwanda");
+            check(nationality);
         }catch (NationalityException e){
             System.out.println(e.toString());
         }finally {
             System.out.println("Thanks for applying");
         }
     }
+
 }
