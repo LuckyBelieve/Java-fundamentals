@@ -1,3 +1,5 @@
+package rca.java;
+
 import java.io.*;
 
 interface RadioTelevision {
@@ -19,10 +21,10 @@ class Car implements RadioTelevision, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private String color;
-    private int numberOfSeats;
-    private int minimumHeight;
-    private int maximumHeight;
+    private final String color;
+    private final int numberOfSeats;
+    private final int minimumHeight;
+    private final int maximumHeight;
 
     public Car(String color, int numberOfSeats, int minimumHeight, int maximumHeight) {
         this.color = color;
@@ -35,41 +37,26 @@ class Car implements RadioTelevision, Serializable {
         return color;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public int getNumberOfSeats() {
         return numberOfSeats;
-    }
-
-    public void setNumberOfSeats(int numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
     }
 
     public int getMinimumHeight() {
         return minimumHeight;
     }
 
-    public void setMinimumHeight(int minimumHeight) {
-        this.minimumHeight = minimumHeight;
-    }
-
     public int getMaximumHeight() {
         return maximumHeight;
     }
 
-    public void setMaximumHeight(int maximumHeight) {
-        this.maximumHeight = maximumHeight;
-    }
     @Override
     public void watchTelevision() {
-        System.out.println("Watching television in the car.");
+        System.out.println("Watch television in the car.");
     }
 
     @Override
     public void playRadio() {
-        System.out.println("Playing radio in the car.");
+        System.out.println("Play radio in the car.");
     }
 
     @Override
@@ -83,11 +70,25 @@ class Car implements RadioTelevision, Serializable {
     }
 }
 
+
+
+//toyota class
 class Toyota extends Car {
     public Toyota(String color, int numberOfSeats, int minimumHeight, int maximumHeight) {
         super(color, numberOfSeats, minimumHeight, maximumHeight);
     }
+    public String toString() {
+        return "Toyota{" +
+                "color='" + super.getColor() + '\'' +
+                ", numberOfSeats=" + super.getNumberOfSeats() +
+                ", minimumHeight=" + super.getMinimumHeight() +
+                ", maximumHeight=" + super.getMaximumHeight() +
+                '}';
+    }
 }
+
+
+//benz class
 
 class Benz extends Car implements AirConditioner {
     public Benz(String color, int numberOfSeats, int minimumHeight, int maximumHeight) throws SeatNumberException {
@@ -96,6 +97,14 @@ class Benz extends Car implements AirConditioner {
             throw new SeatNumberException("The number of seats is beyond 100");
         }
     }
+    public String toString() {
+        return "Benz{" +
+                "color='" + super.getColor() + '\'' +
+                ", numberOfSeats=" + super.getNumberOfSeats() +
+                ", minimumHeight=" + super.getMinimumHeight() +
+                ", maximumHeight=" + super.getMaximumHeight() +
+                '}';
+    }
 
     @Override
     public void manageTemperature() {
@@ -103,38 +112,45 @@ class Benz extends Car implements AirConditioner {
     }
 }
 
+
+
+//main class
+
 public class Main {
     public static void main(String[] args) {
         // Create objects
         Car car = new Car("Blue", 5, 150, 300);
         Toyota toyota = new Toyota("Red", 4, 140, 280);
+        Benz Benz1 = null;
         try {
-            Benz benz = new Benz("Black", 100, 200, 500);
-            // Handle SeatNumberException
+            Benz1 = new Benz("Black", 100, 200,500);
         } catch (SeatNumberException e) {
             System.out.println("Exception: " + e.getMessage());
         }
 
         // Serialize and write to file
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("car.ser"))) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("carObject.ser"))) {
             objectOutputStream.writeObject(car);
             objectOutputStream.writeObject(toyota);
+            if (Benz1 != null){
+                objectOutputStream.writeObject(Benz1);
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         // Read from file and display content
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("car.ser"))) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("carObject.ser"))) {
             while (true) {
                 try {
                     Car readCar = (Car) objectInputStream.readObject();
                     System.out.println(readCar);
                 } catch (EOFException e) {
-                    break; // End of file reached
+                    break;
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
