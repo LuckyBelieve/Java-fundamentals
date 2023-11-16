@@ -94,7 +94,7 @@ class Benz extends Car implements AirConditioner {
     public Benz(String color, int numberOfSeats, int minimumHeight, int maximumHeight) throws SeatNumberException {
         super(color, numberOfSeats, minimumHeight, maximumHeight);
         if (numberOfSeats > 100) {
-            throw new SeatNumberException("The number of seats is beyond 100");
+            throw new SeatNumberException("The number of seats of benz is beyond 100");
         }
     }
     public String toString() {
@@ -119,11 +119,11 @@ class Benz extends Car implements AirConditioner {
 public class Main {
     public static void main(String[] args) {
         // Create objects
-        Car car = new Car("Blue", 5, 150, 300);
-        Toyota toyota = new Toyota("Red", 4, 140, 280);
+        Car car = new Car("Blue", 115, 150, 300);
+        Toyota toyota = new Toyota("Red", 124, 140, 280);
         Benz Benz1 = null;
         try {
-            Benz1 = new Benz("Black", 100, 200,500);
+            Benz1 = new Benz("Black", 130, 200,500);
         } catch (SeatNumberException e) {
             System.out.println("Exception: " + e.getMessage());
         }
